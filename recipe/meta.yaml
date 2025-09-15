@@ -24,7 +24,7 @@ requirements:
     - python
     - wcwidth
   run_constrained:
-    # Following from conda-forge
+    # Following from conda-forge:
     # Prevent ptable from interfering with prettytable
     - ptable >=9999
 
