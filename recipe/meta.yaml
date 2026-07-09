@@ -2,12 +2,14 @@
 {% set version = "3.18.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 439217116152244369caf3d9f1caf2f9fe29b03bd79e88d2928c8e718c95d680
+  patches:
+    - patches/0001-remove-unsupported-classifier.patch
 
 build:
   skip: true  # [py<310]
@@ -29,6 +31,8 @@ requirements:
     - ptable >=9999
 
 test:
+  source_files:
+    - tests
   imports:
     - prettytable
     - prettytable.colortable
