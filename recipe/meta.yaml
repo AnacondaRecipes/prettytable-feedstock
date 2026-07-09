@@ -31,8 +31,6 @@ requirements:
     - ptable >=9999
 
 test:
-  source_files:
-    - tests
   imports:
     - prettytable
     - prettytable.colortable
