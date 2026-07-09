@@ -1,16 +1,18 @@
 {% set name = "prettytable" %}
-{% set version = "3.16.0" %}
+{% set version = "3.18.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3c64b31719d961bf69c9a7e03d0c1e477320906a98da63952bc6698d6164ff57
+  sha256: 439217116152244369caf3d9f1caf2f9fe29b03bd79e88d2928c8e718c95d680
+  patches:
+    - patches/0001-remove-unsupported-classifier.patch
 
 build:
-  skip: true  # [py<39]
+  skip: true  # [py<310]
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
@@ -22,7 +24,7 @@ requirements:
     - hatchling >=1.27
   run:
     - python
-    - wcwidth
+    - wcwidth >=0.3.5
   run_constrained:
     # Following from conda-forge
     # Prevent ptable from interfering with prettytable
@@ -36,7 +38,7 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    # Cannot invoke upstream tests -> ModuleNotFoundError: No module named 'pytest_lazy_fixtures'
+  # Cannot invoke upstream tests -> ModuleNotFoundError: No module named 'pytest_lazy_fixtures'
   requires:
     - pip
 
